@@ -1,6 +1,6 @@
-# Inventory Management System
+# Salad Shop Inventory Management System
 
-A full-stack inventory management system built with Elixir/Phoenix backend and React/TypeScript frontend.
+A full-stack inventory management system for a salad shop, built with Elixir/Phoenix backend and React/TypeScript frontend. Track ingredients, manage stock levels, and monitor inventory movements for your salad business.
 
 ## Tech Stack
 
@@ -62,14 +62,14 @@ Stock = sum(IN movements) - sum(OUT movements) + sum(ADJUSTMENT movements)
 - **OUT**: Subtracts from stock (positive quantity)
 - **ADJUSTMENT**: Can add or subtract (positive or negative quantity)
 
-### Example
+### Example (Salad Shop - Romaine Lettuce)
 ```
-Initial: 0 stock
-+ IN: 100 units → Stock = 100
-- OUT: 30 units → Stock = 70
-+ IN: 20 units → Stock = 90
-+ ADJUSTMENT: +5 units → Stock = 95
-- OUT: 10 units → Stock = 85
+Initial: 0 kg
++ IN: 50 kg (new delivery) → Stock = 50 kg
+- OUT: 12 kg (used for salads) → Stock = 38 kg
++ IN: 30 kg (new delivery) → Stock = 68 kg
++ ADJUSTMENT: +2 kg (found extra stock) → Stock = 70 kg
+- OUT: 15 kg (used for salads) → Stock = 55 kg
 ```
 
 ### Negative Stock Prevention
@@ -91,10 +91,10 @@ Fetch all items with current stock.
   "data": [
     {
       "id": 1,
-      "name": "Widget A",
-      "sku": "WID001",
-      "unit": "pcs",
-      "stock": 50,
+      "name": "Romaine Lettuce",
+      "sku": "LET-ROMA-001",
+      "unit": "kg",
+      "stock": 25,
       "inserted_at": "2024-01-01T00:00:00Z",
       "updated_at": "2024-01-01T00:00:00Z"
     }
@@ -109,9 +109,9 @@ Create a new item.
 ```json
 {
   "item": {
-    "name": "Widget A",
-    "sku": "WID001",
-    "unit": "pcs"
+    "name": "Cherry Tomatoes",
+    "sku": "TOM-CHERRY-001",
+    "unit": "kg"
   }
 }
 ```
@@ -206,10 +206,11 @@ mix ecto.create
 mix ecto.migrate
 ```
 
-4. (Optional) Seed the database:
+4. (Recommended) Seed the database with sample salad shop items:
 ```bash
 mix run priv/repo/seeds.exs
 ```
+This will create sample ingredients like lettuce, tomatoes, cucumbers, etc. with initial stock levels.
 
 5. Start the Phoenix server:
 ```bash
@@ -253,50 +254,55 @@ The test suite includes:
 ## Frontend Features
 
 ### Item List
-- Displays all items with current stock
-- Click on an item to view details
-- Highlights low stock items (< 10 units)
+- Displays all salad shop ingredients with current stock
+- Click on an ingredient to view details
+- Highlights low stock items (< 10 units) - helps prevent running out of ingredients during service
 
 ### Create Item Form
-- Create new items with name, SKU, and unit
+- Add new ingredients with name, SKU, and unit
 - Validates required fields and unit type
+- Perfect for adding new ingredients to your inventory
 
 ### Inventory Movement Form
-- Record IN, OUT, or ADJUSTMENT movements
-- Validates quantity and prevents negative stock
-- Shows current stock for selected item
+- Record IN (deliveries), OUT (usage), or ADJUSTMENT (corrections) movements
+- Validates quantity and prevents negative stock (can't use what you don't have)
+- Shows current stock for selected ingredient
 
 ### Item Detail View
-- View item information and current stock
-- Display complete movement history
+- View ingredient information and current stock
+- Display complete movement history (track all deliveries and usage)
 - Record new movements from detail view
 
 ## Assumptions
 
 1. **Stock Calculation**: Stock is always calculated from movements, never stored directly
-2. **Negative Stock**: Not allowed - system rejects movements that would result in negative stock
+2. **Negative Stock**: Not allowed - system rejects movements that would result in negative stock (prevents selling ingredients you don't have)
 3. **Movement Quantity**: Must be positive for IN/OUT, can be positive or negative for ADJUSTMENT
-4. **SKU Uniqueness**: Each item must have a unique SKU
-5. **Unit Types**: Only three unit types supported: "pcs", "kg", "litre"
+4. **SKU Uniqueness**: Each ingredient must have a unique SKU
+5. **Unit Types**: Three unit types supported:
+   - `kg` - for vegetables, fruits, cheese, etc. (e.g., lettuce, tomatoes)
+   - `litre` - for liquids (e.g., olive oil, vinegar, dressings)
+   - `pcs` - for packaged items (e.g., croutons, packaged ingredients)
 6. **Transaction Safety**: Movement creation is atomic - if stock validation fails, the movement is rolled back
+7. **Salad Shop Context**: Designed for tracking fresh ingredients and supplies for a salad business
 
 ## Improvements & Future Enhancements
 
-1. **Authentication & Authorization**: Add user authentication and role-based access control
-2. **Pagination**: Implement pagination for items and movements lists
-3. **Search & Filtering**: Add search by name/SKU and filter by unit type
-4. **Stock Alerts**: Email/notification system for low stock items
-5. **Audit Trail**: Enhanced logging and audit trail for all movements
-6. **Bulk Operations**: Support for bulk item creation and movement recording
-7. **Reports**: Generate inventory reports (stock levels, movement summaries)
-8. **Real-time Updates**: WebSocket support for real-time stock updates
-9. **Export/Import**: CSV/Excel export and import functionality
-10. **Multi-warehouse**: Support for multiple warehouse locations
-11. **Reservations**: Reserve stock for pending orders
-12. **Unit Tests for Frontend**: Add Jest/React Testing Library tests
-13. **API Documentation**: Add Swagger/OpenAPI documentation
-14. **Docker Support**: Containerize the application for easy deployment
-15. **CI/CD Pipeline**: Automated testing and deployment
+1. **Expiration Dates**: Track expiration dates for fresh ingredients (critical for salad shop)
+2. **Low Stock Alerts**: Email/notification system when ingredients run low
+3. **Supplier Management**: Track suppliers and delivery schedules
+4. **Recipe Integration**: Link ingredients to menu items/recipes, calculate required stock
+5. **Daily Usage Reports**: Track daily ingredient usage patterns
+6. **Waste Tracking**: Record spoiled/wasted ingredients with reasons
+7. **Cost Tracking**: Track ingredient costs and calculate profit margins
+8. **Seasonal Items**: Mark seasonal ingredients, suggest alternatives
+9. **Multi-location**: Support for multiple shop locations or kitchen/prep areas
+10. **Barcode Scanning**: Add barcode scanning for quick stock updates
+11. **Mobile App**: Mobile app for kitchen staff to update stock in real-time
+12. **Integration with POS**: Integrate with point-of-sale system for automatic stock deductions
+13. **Authentication & Authorization**: User roles (manager, chef, staff) with different permissions
+14. **API Documentation**: Add Swagger/OpenAPI documentation
+15. **Docker Support**: Containerize the application for easy deployment
 
 ## Development Notes
 

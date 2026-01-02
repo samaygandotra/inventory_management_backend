@@ -12,7 +12,7 @@ const ItemList: React.FC<ItemListProps> = ({ items, onItemClick }) => {
     <div className="ItemList">
       <h2>Items</h2>
       {items.length === 0 ? (
-        <p>No items found. Create your first item!</p>
+        <p>No ingredients found. Add your first ingredient to get started!</p>
       ) : (
         <table>
           <thead>

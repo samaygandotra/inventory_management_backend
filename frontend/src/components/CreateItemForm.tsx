@@ -44,7 +44,7 @@ const CreateItemForm: React.FC<CreateItemFormProps> = ({ onItemCreated, onCancel
 
   return (
     <div className="Form-container">
-      <h2>Create Item</h2>
+      <h2>Add New Ingredient</h2>
       <form onSubmit={handleSubmit} className="Form">
         <div className="Form-group">
           <label htmlFor="name">Name *</label>
@@ -86,7 +86,7 @@ const CreateItemForm: React.FC<CreateItemFormProps> = ({ onItemCreated, onCancel
 
         <div className="Form-actions">
           <button type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Create Item'}
+            {loading ? 'Adding...' : 'Add Ingredient'}
           </button>
           <button type="button" onClick={onCancel}>
             Cancel

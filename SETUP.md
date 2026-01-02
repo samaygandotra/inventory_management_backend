@@ -1,4 +1,4 @@
-# Quick Setup Guide
+# Quick Setup Guide - Salad Shop Inventory
 
 ## Prerequisites
 - Elixir 1.14+ and Erlang/OTP 25+
@@ -27,7 +27,13 @@
    mix ecto.migrate
    ```
 
-5. **Start the Phoenix server:**
+5. **(Recommended) Seed the database with sample salad shop ingredients:**
+   ```bash
+   mix run priv/repo/seeds.exs
+   ```
+   This creates sample ingredients like lettuce, tomatoes, cucumbers, etc.
+
+6. **Start the Phoenix server:**
    ```bash
    mix phx.server
    ```
@@ -74,4 +80,3 @@ If `mix ecto.create` fails, make sure:
 - Backend runs on port 4000 by default
 - Frontend runs on port 3000 by default
 - Change ports in config files if needed
-
